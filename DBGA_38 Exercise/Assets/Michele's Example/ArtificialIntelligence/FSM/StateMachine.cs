@@ -25,11 +25,9 @@ namespace AI.FSM
         public State stateSearch;
 
         public State initialState;
-
-
-        List<Transition> transitions;
         private State currentState;
 
+        List<Transition> transList;
 
         // Start up the machine
         public void StartMachine()
@@ -40,11 +38,11 @@ namespace AI.FSM
         public void CreateTransitions()
         {
             // Create all transitions between states
-            transitions = new List<Transition>();
-            transitions.Add(new Transition(stateIdle, Input.PlayerClose, stateFlee));
-            transitions.Add(new Transition(stateFlee, Input.PlayerNotClose, stateIdle));
-            transitions.Add(new Transition(stateIdle, Input.Timeout, stateSearch));
-            transitions.Add(new Transition(stateSearch, Input.PlayerClose, stateFlee));
+            transList = new List<Transition>();
+            transList.Add(new Transition(stateIdle, Input.PlayerClose, stateFlee));
+            transList.Add(new Transition(stateFlee, Input.PlayerNotClose, stateIdle));
+            transList.Add(new Transition(stateIdle, Input.Timeout, stateSearch));
+            transList.Add(new Transition(stateSearch, Input.PlayerClose, stateFlee));
         }
 
 
@@ -57,7 +55,7 @@ namespace AI.FSM
         // Handle the arrival of an input
         public void HandleInput(Input i)
         {
-            foreach(var transition in transitions)
+            foreach(var transition in transList)
             {
                 if (transition.input == i && transition.fromState == this.currentState)
                 {

@@ -35,12 +35,10 @@ namespace AI.FSM
             // Get inputs
             float distance = Vector3.Distance(playerTr.position, this.transform.position);
             if (distance < threshold)
-            {
                 sm.HandleInput(Input.PlayerClose);
-            } else
-            {
+
+            else
                 sm.HandleInput(Input.PlayerNotClose);
-            }
 
             // At each frame, we ask the FSM to do whattever its current state wants to do
             sm.StateUpdate();

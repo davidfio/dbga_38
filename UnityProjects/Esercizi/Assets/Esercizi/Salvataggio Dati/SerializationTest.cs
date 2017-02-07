@@ -87,7 +87,7 @@ namespace TestFile
             TestSaveData sd;
             sd.v = 10;
             sd.f = 5.23f;
-            graph = sd;
+            //graph = sd;
 
             // Save the graph object to a file
             BinaryFormatter formatter = new BinaryFormatter();
