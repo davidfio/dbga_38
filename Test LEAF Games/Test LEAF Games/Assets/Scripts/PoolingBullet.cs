@@ -1,20 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public class PoolingBullet : MonoBehaviour {
+public class PoolingBullet : MonoBehaviour
+{
+    public static List<Bullet> bulletPool;
+    public Bullet bulletGO;
 
-	private void OnEnable()
+    private byte pooledBullet = 3;
+
+    private void Awake()
     {
-        Invoke("DisableBullet", 1f);
-    }
+        bulletPool = new List<Bullet>();
 
-    private void OnDisable()
-    {
-        CancelInvoke();
-    }
-
-    private void DisableBullet()
-    {
-        this.gameObject.SetActive(false);
+        // Create 25 bullets and stock the bullet into the bulletPool
+        for (int i = 0; i < pooledBullet; i++)
+        {
+            Bullet bulletCreate = Instantiate(bulletGO);
+            bulletCreate.name = "Bullet";
+            bulletCreate.fromPlayer = false;
+            bulletCreate.gameObject.SetActive(false);
+            bulletPool.Add(bulletCreate);
+        }
     }
 }

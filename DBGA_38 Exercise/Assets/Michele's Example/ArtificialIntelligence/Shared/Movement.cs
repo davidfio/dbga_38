@@ -12,7 +12,5 @@ namespace AI
         {
             transform.position += velocity * Time.deltaTime;
         }
-
     }
-
 }

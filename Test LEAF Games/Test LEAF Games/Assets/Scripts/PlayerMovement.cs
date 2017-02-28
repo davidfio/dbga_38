@@ -4,9 +4,10 @@ using System.Collections;
 public class PlayerMovement : MonoBehaviour
 {
     private Vector3 playerPos, mousePos;
+    private Rigidbody rb;
+
     private float mouseAngle;
     public float speed;
-    private Rigidbody rb;
 
 	private void Awake ()
     {
@@ -24,7 +25,6 @@ public class PlayerMovement : MonoBehaviour
         
         // Calculate angle created by mouse for player's rotation 
         mouseAngle = Mathf.Atan2(-mousePos.y, mousePos.x) * Mathf.Rad2Deg;
-
     }
 
     // Using WASD add a physic continuous force for the player's movement
