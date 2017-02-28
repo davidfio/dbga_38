@@ -8,8 +8,10 @@ public class SenderUE : MonoBehaviour
     // Create a standard delegate with bool and string
     public Action<bool, string> deleghino;
     
+    /*
     // For UnityEvent i need a reference to the ListenerUI      
     ListenerUE refListenerUE;
+
 
     private void Awake()
     {
@@ -23,7 +25,7 @@ public class SenderUE : MonoBehaviour
             //refListenerUE.myUnityEvent.Invoke();
             refListenerUE.MyProperty.Invoke();
     }
-    
+    */
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))

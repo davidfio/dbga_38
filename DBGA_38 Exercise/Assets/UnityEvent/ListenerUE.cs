@@ -33,6 +33,11 @@ public class ListenerUE : MonoBehaviour
         refSender.deleghino = MethodCalledByDelegate;
     }
 
+    private void MethodCalledByDelegate(bool _value, string _message)
+    {
+        Debug.Log(_value + " " + _message);
+    }
+
     private void Logger()
     {
         Debug.Log("First Method Spawn Cube, This Second Method Debug Something");
@@ -44,8 +49,5 @@ public class ListenerUE : MonoBehaviour
             meshChild.enabled = true;
     }
 
-    private void MethodCalledByDelegate(bool _value, string _message)
-    {
-        Debug.Log(_value + " " + _message);
-    }
+
 }
