@@ -22,9 +22,9 @@ public class PlayerShooter : MonoBehaviour
         {
             if (!PoolingBullet.bulletPool[i].gameObject.activeInHierarchy)
             {
+                PoolingBullet.bulletPool[i].fromPlayer = true;
                 PoolingBullet.bulletPool[i].transform.position = bulletSpawn.transform.position;
                 PoolingBullet.bulletPool[i].gameObject.SetActive(true);
-                PoolingBullet.bulletPool[i].fromPlayer = true;
                 PoolingBullet.bulletPool[i].GetComponent<Rigidbody>().velocity = bulletSpawn.transform.forward * speedShoot;
                 break;
             }

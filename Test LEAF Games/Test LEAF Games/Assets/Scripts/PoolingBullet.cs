@@ -7,7 +7,7 @@ public class PoolingBullet : MonoBehaviour
     public static List<Bullet> bulletPool;
     public Bullet bulletGO;
 
-    private byte pooledBullet = 3;
+    private byte pooledBullet = 50;
 
     private void Awake()
     {

@@ -51,6 +51,7 @@ public class StateMachine
     {
         transList = new List<Transition>();
         transList.Add(new Transition(stateIdle, InputState.PlayerClose, stateAttack));
+        transList.Add(new Transition(stateIdle, InputState.BulletClose, stateDodge));
         transList.Add(new Transition(stateAttack, InputState.BulletClose, stateDodge));
         transList.Add(new Transition(stateDodge, InputState.PlayerClose, stateAttack));
         transList.Add(new Transition(stateAttack, InputState.PlayerNotClose, stateIdle));

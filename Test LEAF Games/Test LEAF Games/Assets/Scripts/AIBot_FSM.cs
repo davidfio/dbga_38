@@ -18,23 +18,52 @@ public class AIBot_FSM : MonoBehaviour
         sm.initialState = sm.stateIdle;
         sm.StartMachine();
         sm.CreateTransition();
+        StartCoroutine(UpdateCO());
     }
 	
 	void Update ()
     {
-         distance = (byte)Vector3.Distance(mainPlayer.transform.position, this.transform.position);
+        distance = (byte)Vector3.Distance(mainPlayer.transform.position, this.transform.position);
+        LookThePlayer();
 
         if (distance < threshold)
         {
             sm.HandleInput(InputState.PlayerClose);
         }
 
-        LookThePlayer();
-        sm.StateUpdate();
-	}
+        else
+        {
+            sm.HandleInput(InputState.PlayerNotClose);
+            sm.StateUpdate();
+        }
+
+        //sm.StateUpdate();
+    }
 
     private void LookThePlayer()
     {
         this.transform.LookAt(mainPlayer.transform.position);
+    }
+
+    private void OnTriggerEnter(Collider coll)
+    {
+        if (coll.gameObject.name == "Bullet")
+        {
+            sm.HandleInput(InputState.BulletClose);
+            sm.StateUpdate();
+            sm.HandleInput(InputState.PlayerClose);
+            sm.StateUpdate();
+        }
+    }
+
+    private IEnumerator UpdateCO()
+    {
+        while (true)
+        {
+            sm.StateUpdate();
+            Debug.Log("Eseguo lo StateUpdate()");
+            yield return new WaitForSeconds(1f);
+        }
+        
     }
 }

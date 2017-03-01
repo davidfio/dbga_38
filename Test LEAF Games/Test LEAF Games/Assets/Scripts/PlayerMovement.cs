@@ -43,5 +43,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.D))
             rb.AddForce(transform.right * speed * Time.fixedDeltaTime, ForceMode.Force);
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+            rb.AddForce(transform.forward * 600 * Time.fixedDeltaTime, ForceMode.Impulse);
     }
 }

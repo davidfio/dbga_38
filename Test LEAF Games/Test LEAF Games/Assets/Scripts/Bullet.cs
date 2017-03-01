@@ -26,13 +26,15 @@ public class Bullet : MonoBehaviour
         if (coll.gameObject.name == "Player" && !fromPlayer) 
         {
             this.gameObject.SetActive(false);
-            Destroy(coll.gameObject);
+            //Destroy(coll.gameObject);
+            Debug.Log("PlayerDestroy");
         }
 
         else if (coll.gameObject.name == "Enemy" && fromPlayer)
         {
             this.gameObject.SetActive(false);
             Destroy(coll.gameObject);
+            Debug.Log("EnemyDestroy");
         }
     }
 }
