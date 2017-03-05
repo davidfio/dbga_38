@@ -5,10 +5,11 @@ public class AIBot_FSM : MonoBehaviour
 {
     public GameObject mainPlayer;
     private StateMachine sm;
+    private Vector3 fixPos;
     private byte distance;
     private byte threshold = 10;
 
-    private void Start ()
+    private void Start()
     {
         sm = new StateMachine();
         sm.stateIdle = GetComponentInChildren<State_Idle>();
@@ -18,33 +19,18 @@ public class AIBot_FSM : MonoBehaviour
         sm.initialState = sm.stateIdle;
         sm.StartMachine();
         sm.CreateTransition();
+        StartCoroutine(UpdateAttackCO());
         StartCoroutine(UpdateCO());
     }
-	
-	void Update ()
-    {
-        distance = (byte)Vector3.Distance(mainPlayer.transform.position, this.transform.position);
-        LookThePlayer();
 
-        if (distance < threshold)
-        {
-            sm.HandleInput(InputState.PlayerClose);
-        }
-
-        else
-        {
-            sm.HandleInput(InputState.PlayerNotClose);
-            sm.StateUpdate();
-        }
-
-        //sm.StateUpdate();
-    }
+#region Methods Declaration
 
     private void LookThePlayer()
     {
         this.transform.LookAt(mainPlayer.transform.position);
     }
 
+    // IA's dodge pattern
     private void OnTriggerEnter(Collider coll)
     {
         if (coll.gameObject.name == "Bullet")
@@ -56,14 +42,40 @@ public class AIBot_FSM : MonoBehaviour
         }
     }
 
-    private IEnumerator UpdateCO()
+    // Fire rate of IA's attack 
+    private IEnumerator UpdateAttackCO()
     {
         while (true)
         {
             sm.StateUpdate();
-            Debug.Log("Eseguo lo StateUpdate()");
             yield return new WaitForSeconds(1f);
         }
         
     }
+
+    // IA's update
+    private IEnumerator UpdateCO()
+    {
+        while (mainPlayer.gameObject != null)
+        {
+            fixPos = new Vector3(this.transform.position.x, 0, this.transform.position.z);
+            this.transform.position = fixPos;
+            LookThePlayer();
+
+            distance = (byte)Vector3.Distance(mainPlayer.transform.position, this.transform.position);
+
+            // Go into Attack State
+            if (distance < threshold)
+                sm.HandleInput(InputState.PlayerClose);
+            // Otherwise go in Idle
+            else
+            {
+                sm.HandleInput(InputState.PlayerNotClose);
+                sm.StateUpdate();
+            }
+            yield return null;
+        }
+        yield break;
+    }
+#endregion
 }

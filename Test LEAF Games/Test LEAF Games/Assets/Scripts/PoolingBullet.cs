@@ -7,13 +7,13 @@ public class PoolingBullet : MonoBehaviour
     public static List<Bullet> bulletPool;
     public Bullet bulletGO;
 
-    private byte pooledBullet = 50;
+    private byte pooledBullet = 40;
 
     private void Awake()
     {
         bulletPool = new List<Bullet>();
 
-        // Create 25 bullets and stock the bullet into the bulletPool
+        // Creates bullets and stock them into the bulletPool
         for (int i = 0; i < pooledBullet; i++)
         {
             Bullet bulletCreate = Instantiate(bulletGO);

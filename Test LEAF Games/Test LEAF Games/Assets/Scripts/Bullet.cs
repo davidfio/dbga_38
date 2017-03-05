@@ -4,6 +4,14 @@ using System.Collections;
 public class Bullet : MonoBehaviour
 {
     public bool fromPlayer;
+    private GameController refGC;
+
+    private void Awake()
+    {
+        refGC = FindObjectOfType<GameController>();
+    }
+
+#region Methods Declaration
 
     private void OnEnable()
     {
@@ -18,23 +26,30 @@ public class Bullet : MonoBehaviour
     private void DisableBullet()
     {
         this.gameObject.SetActive(false);
+        GetComponent<MeshRenderer>().material.color = Color.white;
         fromPlayer = false;
     }
 
+    // Destroy the Player, the enemies and the others bullets
     private void OnCollisionEnter(Collision coll)
     {
         if (coll.gameObject.name == "Player" && !fromPlayer) 
         {
-            this.gameObject.SetActive(false);
-            //Destroy(coll.gameObject);
-            Debug.Log("PlayerDestroy");
+            DisableBullet();
+            Destroy(coll.gameObject);
+            refGC.myUnityEvent.Invoke();
         }
 
         else if (coll.gameObject.name == "Enemy" && fromPlayer)
         {
-            this.gameObject.SetActive(false);
+            DisableBullet();
             Destroy(coll.gameObject);
-            Debug.Log("EnemyDestroy");
+        }
+
+        else if (coll.gameObject.name == "Bullet")
+        {
+            DisableBullet();
         }
     }
+#endregion
 }

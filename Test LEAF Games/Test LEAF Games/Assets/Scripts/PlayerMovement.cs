@@ -3,10 +3,10 @@ using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private Vector3 playerPos, mousePos;
+    private Vector3 playerPos, mousePos, fixPos;
     private Rigidbody rb;
 
-    private float mouseAngle;
+    private float mouseAngle, dash = 400;
     public float speed;
 
 	private void Awake ()
@@ -16,6 +16,9 @@ public class PlayerMovement : MonoBehaviour
 	
 	private void Update ()
     {
+        fixPos = new Vector3(this.transform.position.x, 0, this.transform.position.z);
+        this.transform.position = fixPos;
+
         // Take and adjust the positions of mouse and player
         playerPos = Camera.main.WorldToScreenPoint(this.transform.position);
         mousePos = Input.mousePosition;
@@ -25,12 +28,13 @@ public class PlayerMovement : MonoBehaviour
         
         // Calculate angle created by mouse for player's rotation 
         mouseAngle = Mathf.Atan2(-mousePos.y, mousePos.x) * Mathf.Rad2Deg;
-    }
 
-    // Using WASD add a physic continuous force for the player's movement
-    private void FixedUpdate()
-    {
         rb.MoveRotation(Quaternion.Euler(new Vector3(0, mouseAngle - 270, 0)));
+
+        // Using WASD add a physic continuous force for the player's movement
+        // I use fixedDeltaTime in Update because command are more responsive, that's incorrect i know
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+            rb.AddForce(transform.forward * dash * Time.fixedDeltaTime, ForceMode.Impulse);
 
         if (Input.GetKey(KeyCode.W))
             rb.AddForce(transform.forward * speed * Time.fixedDeltaTime, ForceMode.Force);
@@ -43,8 +47,5 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.D))
             rb.AddForce(transform.right * speed * Time.fixedDeltaTime, ForceMode.Force);
-
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-            rb.AddForce(transform.forward * 600 * Time.fixedDeltaTime, ForceMode.Impulse);
     }
 }

@@ -28,12 +28,12 @@ public class Transition
     }
 }
 
+#region Finite State Machine Declaration
 public class StateMachine
 {
     public State stateIdle;
     public State stateAttack;
     public State stateDodge;
-
 
     public State initialState;
     private State currentState;
@@ -74,5 +74,5 @@ public class StateMachine
             }
         }
     }
-	
+#endregion
 }

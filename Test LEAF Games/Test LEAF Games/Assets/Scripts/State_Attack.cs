@@ -14,12 +14,12 @@ public class State_Attack : State
             {
                 PoolingBullet.bulletPool[i].transform.position = bulletSpawn.transform.position;
                 PoolingBullet.bulletPool[i].gameObject.SetActive(true);
+                PoolingBullet.bulletPool[i].GetComponent<MeshRenderer>().material.color = Color.blue;
                 PoolingBullet.bulletPool[i].fromPlayer = false;
                 PoolingBullet.bulletPool[i].GetComponent<Rigidbody>().velocity = 
                     bulletSpawn.transform.forward * speedShoot;
                 break;
             }
         }
-        Debug.Log("ATTACK STATE");
     }
 }
